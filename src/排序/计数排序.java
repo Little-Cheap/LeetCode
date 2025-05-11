@@ -1,35 +1,37 @@
 package 排序;
 
+import java.util.Arrays;
+
 public class 计数排序 {
     public static void main(String[] args) {
         //
-        int[] nums = {1,0,1,2,0,4,0,2,2,4};
+        int[] nums = {1, 0, 1, 2, 0, 4, 0, 2, 2, 4};
+        countingSortNaive(nums);
+        System.out.println(Arrays.toString(nums));
 
     }
 
     /**
-     * 简单排序
-     * 1.找到最大的数m
-     * 2.创建一个m+1的数组
-     * 3.计算出现的次数
-     * 4.依次排序
+     * 计数排序
      */
-    public void countingSortNaive(int[] nums){
-        int max = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            if (max < nums[i]) {
-                max = nums[i];
+    public static void countingSortNaive(int[] nums) {
+        // 1. 统计数组最大元素 m
+        int m = 0;
+        for (int num : nums) {
+            m = Math.max(m, num);
+        }
+        // 2. 统计各数字的出现次数
+        // counter[num] 代表 num 的出现次数
+        int[] counter = new int[m + 1];
+        for (int num : nums) {
+            counter[num]++;
+        }
+        // 3. 遍历 counter ，将各元素填入原数组 nums
+        int i = 0;
+        for (int num = 0; num < m + 1; num++) {
+            for (int j = 0; j < counter[num]; j++, i++) {
+                nums[i] = num;
             }
         }
-        int[] temp = new int[max + 1];
-        for (int i = 0; i < nums.length; i++) {
-            temp[nums[i]]++;
-        }
-        for (int i = 0; i < nums.length;) {
-            for (int j = 0; j < temp[i]; j++,i++) {
-                nums[i]--;
-            }
-        }
-
     }
 }
